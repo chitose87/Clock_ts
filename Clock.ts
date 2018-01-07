@@ -98,30 +98,41 @@ export class Clock extends AsEventDispatcher {
 	}
 
 	allListenerSet(initialRun: boolean,
-				   milliseconds: (e: ClockEvent) => void,
-				   seconds: (e: ClockEvent) => void,
-				   minutes: (e: ClockEvent) => void,
-				   hours: (e: ClockEvent) => void,
-				   date: (e: ClockEvent) => void,
-				   month: (e: ClockEvent) => void,
-				   fullYear: (e: ClockEvent) => void): Clock {
+				   milliseconds: (e: ClockEvent) => void = null,
+				   seconds: (e: ClockEvent) => void = null,
+				   minutes: (e: ClockEvent) => void = null,
+				   hours: (e: ClockEvent) => void = null,
+				   date: (e: ClockEvent) => void = null,
+				   month: (e: ClockEvent) => void = null,
+				   fullYear: (e: ClockEvent) => void = null): Clock {
 
-		this.listener(ClockEvent.MILL, milliseconds);
-		this.listener(ClockEvent.SEC, seconds);
-		this.listener(ClockEvent.MIN, minutes);
-		this.listener(ClockEvent.HOUR, hours);
-		this.listener(ClockEvent.DATE, date);
-		this.listener(ClockEvent.MON, month);
-		this.listener(ClockEvent.YEAR, fullYear);
-
-		if (initialRun) {
-			milliseconds(this.millEvent);
-			seconds(this.secEvent);
-			minutes(this.minEvent);
-			hours(this.hourEvent);
-			date(this.dateEvent);
-			month(this.monEvent);
-			fullYear(this.yearEvent);
+		if (milliseconds) {
+			this.listener(ClockEvent.MILL, milliseconds);
+			if (initialRun) milliseconds(this.millEvent);
+		}
+		if (seconds) {
+			this.listener(ClockEvent.SEC, seconds);
+			if (initialRun) seconds(this.secEvent);
+		}
+		if (minutes) {
+			this.listener(ClockEvent.MIN, minutes);
+			if (initialRun) minutes(this.minEvent);
+		}
+		if (hours) {
+			this.listener(ClockEvent.HOUR, hours);
+			if (initialRun) hours(this.hourEvent);
+		}
+		if (date) {
+			this.listener(ClockEvent.DATE, date);
+			if (initialRun) date(this.dateEvent);
+		}
+		if (month) {
+			this.listener(ClockEvent.MON, month);
+			if (initialRun) month(this.monEvent);
+		}
+		if (fullYear) {
+			this.listener(ClockEvent.YEAR, fullYear);
+			if (initialRun) fullYear(this.yearEvent);
 		}
 
 		return this;
