@@ -11,4 +11,12 @@ export class ClockValue {
 		}
 		return result;
 	}
+
+	getPercent(denominator: number, normal: boolean = false): number {
+		let v: number = this._number;
+		if (!normal && v == 0) {
+			v = denominator;
+		}
+		return v / denominator;
+	}
 }
